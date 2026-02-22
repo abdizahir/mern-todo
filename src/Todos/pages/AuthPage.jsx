@@ -6,8 +6,7 @@ import LoginForm from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetTodosState } from "../store/todoSlice.js";
-import { loginUser } from "../store/authSlice";
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { loginUser, signupUser } from "../store/authSlice";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -23,14 +22,27 @@ const AuthPage = () => {
     const formData = new FormData(e.currentTarget);
     const payload = Object.fromEntries(formData.entries());
 
-    // const endpoint = isSignup ? "/signup" : "/login";
-
     try {
-      const action = await dispatch(loginUser(payload));
+      if (isSignup) {
+        const signupAction = await dispatch(signupUser(payload));
+        if (signupUser.rejected.match(signupAction)) {
+          console.log(signupAction.payload || "Signup failed");
+          return;
+        }
 
-      if (loginUser.rejected.match(action)) {
-        console.log(action.payload || "Login failed");
-        return;
+        const loginAction = await dispatch(
+          loginUser({ email: payload.email, password: payload.password })
+        );
+        if (loginUser.rejected.match(loginAction)) {
+          console.log(loginAction.payload || "Login failed");
+          return;
+        }
+      } else {
+        const loginAction = await dispatch(loginUser(payload));
+        if (loginUser.rejected.match(loginAction)) {
+          console.log(loginAction.payload || "Login failed");
+          return;
+        }
       }
 
       form.reset();
@@ -46,9 +58,7 @@ const AuthPage = () => {
   return (
     <>
       <BackgroundHeader />
-      <section
-        className={`mx-auto mt-8 w-[90%] max-w-md rounded-xl bg-white p-5 shadow-lg sm:p-6`}
-      >
+      <section className="mx-auto mt-8 w-[90%] max-w-md rounded-xl bg-white p-5 shadow-lg sm:p-6">
         <h2 className="mb-4 text-2xl font-semibold text-gray-800">
           {isSignup ? "Sign up" : "Login"}
         </h2>

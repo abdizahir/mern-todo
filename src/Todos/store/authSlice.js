@@ -1,15 +1,39 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = `${import.meta.env.VITE_BACKEND_URL}/login`;
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
+export const signupUser = createAsyncThunk(
+  "auth/signupUser",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : null;
+
+      if (!res.ok) {
+        return rejectWithValue(data?.message || "Signup failed");
+      }
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err?.message || "Signup failed");
+    }
+  }
+);
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (credentials, { rejectWithValue }) => {
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        credentials: "include", // needed so browser accepts/sends cookie
         body: JSON.stringify(credentials),
       });
 
@@ -43,6 +67,19 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // signup
+      .addCase(signupUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(signupUser.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(signupUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Signup failed";
+      })
+      // login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
