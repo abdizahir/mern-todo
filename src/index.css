@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+
+
+@layer utilities {
+  /* Base */
+  .bg-white { background-color: #FFFFFF; }
+  .text-white { color: #FFFFFF; }
+  .bg-black { background-color: #000000; }
+  .text-black { color: #000000; }
+
+  /* Purple */
+  .bg-purple-800 { background-color: #393A4B; }
+  .text-purple-800 { color: #393A4B; }
+  .bg-purple-700 { background-color: #4D5067; }
+  .text-purple-700 { color: #4D5067; }
+  .bg-purple-600 { background-color: #5B5E7E; }
+  .text-purple-600 { color: #5B5E7E; }
+  .bg-purple-300 { background-color: #C8CBE7; }
+  .text-purple-300 { color: #C8CBE7; }
+  .bg-purple-100 { background-color: #E3E4F1; }
+  .text-purple-100 { color: #E3E4F1; }
+
+  /* Gray */
+  .bg-gray-600 { background-color: #9495A5; }
+  .text-gray-600 { color: #9495A5; }
+  .bg-gray-300 { background-color: #D1D2DA; }
+  .text-gray-300 { color: #D1D2DA; }
+  .bg-gray-50 { background-color: #FAFAFA; }
+  .text-gray-50 { color: #FAFAFA; }
+
+  /* Navy */
+  .bg-navy-950 { background-color: #171823; }
+  .text-navy-950 { color: #171823; }
+  .bg-navy-900 { background-color: #25273D; }
+  .text-navy-900 { color: #25273D; }
+  .bg-navy-850 { background-color: #494C6B; }
+  .text-navy-850 { color: #494C6B; }
+
+  /* Blue */
+  .bg-blue-500 { background-color: #3A7CFD; }
+  .text-blue-500 { color: #3A7CFD; }
+
+  /* Gradients */
+  .bg-gradient-1 { background: linear-gradient(135deg, #55DDFF, #C058F3); }
+  .bg-gradient-2 { background: linear-gradient(135deg, #3710BD, #A42395); }
+
+  .text-preset-1 {
+    font-weight: 400; /* Regular */
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+  }
+
+  /* Text Preset 2 Bold */
+  .text-preset-2-bold {
+    font-weight: 700; /* Bold */
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+  }
+
+  /* Text Preset 2 Regular */
+  .text-preset-2-regular {
+    font-weight: 400; /* Regular */
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+  }
+
+  /* Text Preset 3 */
+  .text-preset-3 {
+    font-weight: 400; /* Regular */
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+  }
+  
+}
+
+body {
+    font-family: "Josefin Sans", sans-serif;
+    /* background-color: #171823; */
+}
