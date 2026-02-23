@@ -91,3 +91,27 @@ textarea {
 body {
     font-family: "Josefin Sans", sans-serif;
 }
+
+/* ...existing code... */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+/* ...existing code... */

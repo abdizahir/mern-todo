@@ -65,7 +65,7 @@ const BackgroundHeader = () => {
 
   return (
     <section
-      className={"bg-cover bg-center h-50"}
+      className={"bg-cover bg-center h-30"}
       style={{backgroundImage: `url(${bgImage})`}}
     >
       <article className="flex items-center justify-between py-10 px-7">
