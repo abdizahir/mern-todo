@@ -44,7 +44,7 @@ const checkClass =
         <Droppable droppableId="todo">
           {(provided) => (
             <ul
-              className={`rounded-lg rounded-bl-none rounded-br-none sm:w-135.25 sm:m-auto ${theme === "dark" ? "bg-navy-900" : "bg-white"} mx-6 relative -top-26`}
+              className={`relative z-10 rounded-lg rounded-bl-none rounded-br-none sm:w-135.25 sm:m-auto ${theme === "dark" ? "bg-navy-900" : "bg-white"} mx-6 relative -top-26`}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -113,7 +113,7 @@ const checkClass =
       </DragDropContext>
 
       <section
-        className={`rounded-lg rounded-tl-none rounded-tr-none sm:w-135.25 sm:m-auto ${theme === "dark" ? "bg-navy-900" : "bg-white"} mx-6 relative -top-26`}
+        className={`relative z-10  rounded-lg rounded-tl-none rounded-tr-none sm:w-135.25 sm:m-auto ${theme === "dark" ? "bg-navy-900" : "bg-white"} mx-6 relative -top-26`}
       >
         <div
           className={`p-5 text-preset-3 text-purple-600 flex items-center justify-between`}

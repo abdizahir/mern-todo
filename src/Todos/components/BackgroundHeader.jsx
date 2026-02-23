@@ -28,7 +28,7 @@ const BackgroundHeader = () => {
   const {user} = useSelector((state) => state.auth)
   
    useEffect(() => {
-    const media = window.matchMedia("(min-width: 767px)");
+    const media = window.matchMedia("(min-width: 768px)");
     const handler = (e) => setIsDesktop(e.matches);
 
     if (media.addEventListener) media.addEventListener("change", handler);
@@ -49,7 +49,10 @@ const BackgroundHeader = () => {
       ? bgLightDesktop
       : bgLightMobile;
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
+    e?.preventDefault?.();
+  e?.stopPropagation?.();
+
   try {
     await fetch(`${API_URL}/logout`, {
       method: "POST",
@@ -65,10 +68,10 @@ const BackgroundHeader = () => {
 
   return (
     <section
-      className={"bg-cover bg-center h-30"}
+      className={"relative z-50 bg-cover bg-center h-30"}
       style={{backgroundImage: `url(${bgImage})`}}
     >
-      <article className="flex items-center justify-between py-10 px-7">
+      <article className="relative z-50 flex items-center justify-between py-10 px-7">
         <div>
           <h1 className="text-[24px] text-white font-bold tracking-[10px]">
             TODO
@@ -90,8 +93,13 @@ const BackgroundHeader = () => {
           )}
 
           <button
+          type="button"
             aria-label="Toggle theme"
-            onClick={() => dispatch(toggleTheme())}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              dispatch(toggleTheme());
+            }}
           >
             <img
               className="w-5 h-5"
