@@ -58,7 +58,7 @@ const AuthPage = () => {
   return (
     <>
       <BackgroundHeader />
-      <section className="mx-auto mt-8 w-[80%] sm:w-[30] max-w-md rounded-xl bg-white p-5 shadow-lg sm:p-6">
+      <section className="mx-auto mt-8 w-[80%] max-w-md rounded-xl bg-white p-5 shadow-lg sm:p-6">
         <h2 className="mb-4 text-2xl font-semibold text-gray-800">
           {isSignup ? "Sign up" : "Login"}
         </h2>
