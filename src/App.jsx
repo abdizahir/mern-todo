@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import AuthPage from "./Todos/pages/AuthPage";
-// import TodoPage from "./Todos/pages/TodoPage";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import React, { Suspense } from "react";
 
@@ -21,7 +20,7 @@ function App() {
   const theme = useSelector((state) => state.theme.mode);
   const bgTheme = theme === 'dark' ? "bg-navy-950" : "bg-purple-300";
   return (
-    <main className={`h-screen ${bgTheme}`}>
+    <main className={`min-h-screen ${bgTheme}`}>
       <RouterProvider router={router} />
     </main>
   )
