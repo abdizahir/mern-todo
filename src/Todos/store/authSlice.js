@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk(
       const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // needed so browser accepts/sends cookie
+        credentials: "include",
         body: JSON.stringify(credentials),
       });
 
@@ -67,7 +67,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // signup
       .addCase(signupUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -79,7 +78,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload || "Signup failed";
       })
-      // login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchTodos, deleteTodo, toggleTodo, clearCompletedTodos, reorderTodos } from "../store/todoSlice";
 
 const TodoCard = () => {
-  // const { allTodos, filter } = useSelector((state) => state.todos);
   const theme = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
 

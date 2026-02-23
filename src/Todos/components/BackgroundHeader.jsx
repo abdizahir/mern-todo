@@ -3,18 +3,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleTheme } from "../store/themeSlice";
 import { logout } from "../store/authSlice";
+import { useEffect, useState } from "react";
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const BackgroundHeader = () => {
-  const sun = "images/icon-sun.svg";
-  const moon = "images/icon-moon.svg";
+  const sun = `${import.meta.env.BASE_URL}images/icon-sun.svg`;
+  const moon = `${import.meta.env.BASE_URL}images/icon-moon.svg`;
+  const bgDarkMobile = `${import.meta.env.BASE_URL}images/bg-mobile-dark.jpg`;
+  const bgLightMobile = `${import.meta.env.BASE_URL}images/bg-mobile-light.jpg`;
+  const bgDarkDesktop = `${import.meta.env.BASE_URL}images/bg-desktop-dark.jpg`;
+  const bgLightDesktop = `${import.meta.env.BASE_URL}images/bg-desktop-light.jpg`;
+
+  const [isDesktop, setIsDesktop] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  );
+
+ 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const theme = useSelector((state) => state.theme.mode);
   const {user} = useSelector((state) => state.auth)
-  console.log(user);
+  
+   useEffect(() => {
+    const media = window.matchMedia("(min-width: 767px)");
+    const handler = (e) => setIsDesktop(e.matches);
+
+    if (media.addEventListener) media.addEventListener("change", handler);
+    else media.addListener(handler);
+
+    return () => {
+      if (media.removeEventListener) media.removeEventListener("change", handler);
+      else media.removeListener(handler);
+    };
+  }, []);
+
+  const bgImage =
+    theme === "dark"
+      ? isDesktop
+        ? bgDarkDesktop
+        : bgDarkMobile
+      : isDesktop
+      ? bgLightDesktop
+      : bgLightMobile;
+
   const handleLogout = async () => {
   try {
     await fetch(`${API_URL}/logout`, {
@@ -31,11 +65,8 @@ const BackgroundHeader = () => {
 
   return (
     <section
-      className={`bg-cover h-50 ${
-        theme === "dark"
-          ? "bg-[url('images/bg-mobile-dark.jpg')]"
-          : "bg-[url('images/bg-mobile-light.jpg')]"
-      }`}
+      className={"bg-cover bg-center h-50"}
+      style={{backgroundImage: `url(${bgImage})`}}
     >
       <article className="flex items-center justify-between py-10 px-7">
         <div>
@@ -75,4 +106,3 @@ const BackgroundHeader = () => {
 };
 
 export default BackgroundHeader;
-// ...existing code...
