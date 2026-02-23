@@ -51,17 +51,30 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const checkSession = createAsyncThunk("auth/checkSession", async () => {
+  const res = await fetch(`${API_BASE}/me`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data?.user ?? null;
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: JSON.parse(localStorage.getItem("user")) || null,
+    user: null, // do not trust localStorage for auth state
     isLoading: false,
     error: null,
+    authChecked: false,
   },
   reducers: {
     logout(state) {
       state.user = null;
       state.error = null;
+      state.authChecked = true;
       localStorage.removeItem("user");
     },
   },
@@ -84,12 +97,27 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.user = action.payload?.user ?? action.payload;
+        state.authChecked = true;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || "Login failed";
+        state.authChecked = true;
+      })
+      .addCase(checkSession.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(checkSession.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.authChecked = true;
+      })
+      .addCase(checkSession.rejected, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.authChecked = true;
       });
   },
 });
