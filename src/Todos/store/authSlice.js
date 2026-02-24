@@ -52,7 +52,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const checkSession = createAsyncThunk("auth/checkSession", async () => {
-  const res = await fetch(`${API_BASE}/me`, {
+  const res = await fetch(`${API_BASE}`, {
     method: "GET",
     credentials: "include",
   });
